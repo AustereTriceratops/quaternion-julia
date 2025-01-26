@@ -17,6 +17,12 @@ class glManager {
             vertexPosition: gl.getAttribLocation(this.shaderProgram, 'aVertexPosition'),
             resolution: gl.getUniformLocation(this.shaderProgram, 'resolution'),
             aspect: gl.getUniformLocation(this.shaderProgram, 'aspect'),
+            cameraX: gl.getUniformLocation(this.shaderProgram, 'cameraX'),
+            cameraY: gl.getUniformLocation(this.shaderProgram, 'cameraY'),
+            cameraZ: gl.getUniformLocation(this.shaderProgram, 'cameraZ'),
+            cameraPos: gl.getUniformLocation(this.shaderProgram, 'cameraPos'),
+            juliaSeed: gl.getUniformLocation(this.shaderProgram, 'juliaSeed'),
+            plane: gl.getUniformLocation(this.shaderProgram, 'plane'),
         };
         
         gl.uniform2fv(this.shaderAttribs.resolution, [this.width, this.height]);
@@ -27,7 +33,32 @@ class glManager {
         this.gl = gl
     }
 
-    render() {
+    // updateCameraPos(newCameraPos) {
+    //     this.gl.uniform3fv(this.shaderAttribs.cameraPos, newCameraPos);
+    // }
+
+    // updateSeed(juliaSeed) {
+    //     this.gl.uniform4fv(this.shaderAttribs.juliaSeed, juliaSeed);
+    // }
+
+    // updatePlane(plane) {
+    //     this.gl.uniform1f(this.shaderAttribs.plane, plane)
+    // }
+
+    // render() {
+    //     this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+    //     this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
+    // }
+
+    render(cameraPos, cameraX, cameraY, cameraZ, juliaSeed, plane) {
+        this.gl.uniform3fv(this.shaderAttribs.cameraPos, cameraPos);
+        this.gl.uniform3fv(this.shaderAttribs.cameraX, cameraX);
+        this.gl.uniform3fv(this.shaderAttribs.cameraY, cameraY);
+        this.gl.uniform3fv(this.shaderAttribs.cameraZ, cameraZ);
+
+        this.gl.uniform4fv(this.shaderAttribs.juliaSeed, juliaSeed);
+        this.gl.uniform1f(this.shaderAttribs.plane, plane)
+
         this.gl.clear(this.gl.COLOR_BUFFER_BIT);
         this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
     }
