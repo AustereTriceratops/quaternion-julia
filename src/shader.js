@@ -130,7 +130,7 @@ void main() {
   vec2 uv = toNeg1Pos1(gl_FragCoord.xy);
 
   // white background
-  vec3 color = vec3(1.0, 1.0, 1.0);
+  vec3 color = vec3(0.7, 0.6, 0.65);
 
   // get pxl real space as if camera is centered at origin
   vec3 pxl = uv.x * cameraX + cameraY + uv.y * cameraZ;
@@ -154,7 +154,7 @@ void main() {
     float r_min = 0.0005 + 0.001*distance*distance;
 
     if (radius < r_min) {
-      color = vec3(0.84, 0.46, 0.58);
+      color = vec3(0.5, 0.46, 0.38);
 
       vec3 normal = estimateJuliaNormal(ray, juliaCenter, juliaSeed);
 
@@ -185,7 +185,6 @@ void main() {
   }
 
   gl_FragColor = vec4(color, 1.0);
-  //gl_FragColor = vec4(0.2, 0.2, 0.2, 1.0);
 }
 `
 
