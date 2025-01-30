@@ -1,6 +1,5 @@
 import {vertexShader, fragmentShader} from './shader'
 import {initProgram, initPositionBuffer} from './glUtils'
-import { flattenJSON } from 'three/src/animation/AnimationUtils'
 
 class glManager {
     constructor(canvas) {
@@ -32,23 +31,6 @@ class glManager {
 
         this.gl = gl
     }
-
-    // updateCameraPos(newCameraPos) {
-    //     this.gl.uniform3fv(this.shaderAttribs.cameraPos, newCameraPos);
-    // }
-
-    // updateSeed(juliaSeed) {
-    //     this.gl.uniform4fv(this.shaderAttribs.juliaSeed, juliaSeed);
-    // }
-
-    // updatePlane(plane) {
-    //     this.gl.uniform1f(this.shaderAttribs.plane, plane)
-    // }
-
-    // render() {
-    //     this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-    //     this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
-    // }
 
     render(cameraPos, cameraX, cameraY, cameraZ, juliaSeed, plane) {
         this.gl.uniform3fv(this.shaderAttribs.cameraPos, cameraPos);

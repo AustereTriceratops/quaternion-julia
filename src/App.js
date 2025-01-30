@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react'
+import {useEffect, useMemo, useRef, useState} from 'react'
 import glManager from './glManager'
 
 const TIMESTEP = 50
@@ -7,10 +7,38 @@ const App = () => {
   const [juliaSeed, setJuliaSeed] = useState([ 0.33, 0.56, 0.43, -0.72,]);
   const [plane, setPlane] = useState(0.01);
 
-  const [cameraPos, setCameraPos] = useState([1.24, 0, 0.44]);
-  const [cameraAxisX, setCameraAxisX] = useState([0.794, 0, -0.604]);
-  const [cameraAxisY, setCameraAxisY] = useState([-0.604, 0, -0.794]);
-  const [cameraAxisZ, setCameraAxisZ] = useState([0.0, 1.0, 0.0]);
+  const [cameraPhi, setCameraPhi] = useState(0.1);
+  const [cameraTheta, setCameraTheta] = useState(0);
+  const [cameraDist, setCameraDist] = useState(2);
+
+  const cameraPos = useMemo(() => {
+    return [
+      cameraDist * Math.cos(cameraTheta) * Math.cos(cameraPhi),
+      cameraDist * Math.sin(cameraTheta),
+      cameraDist * Math.cos(cameraTheta) * Math.sin(cameraPhi)
+    ];
+  }, [cameraPhi, cameraTheta, cameraDist]);
+
+  const cameraAxisX = useMemo(() => {
+    return [
+      Math.sin(cameraPhi),
+      0,
+      -Math.cos(cameraPhi)
+    ];
+  }, [cameraPhi, cameraTheta]);
+
+  const cameraAxisY = useMemo(() => {
+    return [
+      -Math.cos(cameraPhi),
+      0,
+      -Math.sin(cameraPhi)
+    ];
+  }, [cameraPhi, cameraTheta]);
+
+  // TODO: allow Z axis rotation
+  const cameraAxisZ = useMemo(() => {
+    return [0.0, 1.0, 0.0];
+  }, []);
 
   // ==============================
   // ======= KEYBOARD INPUT =======
@@ -67,38 +95,24 @@ const App = () => {
   // movement
   // should only be updated as t updates
   useEffect(() => {
-    let movement_vec = [0.0, 0.0, 0.0];
+    let newCameraPhi = cameraPhi;
+    let newCameraDist = cameraDist;
 
     if (wDown) {
-      movement_vec = movement_vec.map((coord, i) => {
-        return coord + cameraAxisY[i];
-      })
+      newCameraDist -= 0.1;
     }
     if (aDown) {
-      movement_vec = movement_vec.map((coord, i) => {
-        return coord - cameraAxisX[i];
-      })
+      newCameraPhi += 0.1;
     }
     if (sDown) {
-      movement_vec = movement_vec.map((coord, i) => {
-        return coord - cameraAxisY[i];
-      })
+      newCameraDist += 0.1;
     }
     if (dDown) {
-      movement_vec = movement_vec.map((coord, i) => {
-        return coord + cameraAxisX[i];
-      })
+      newCameraPhi -= 0.1;
     }
 
-    const norm = Math.sqrt(movement_vec.reduce((prev, curr) => prev + curr*curr, 0));
-
-    if (norm > 0.001) {
-      const newCameraPos = cameraPos.map((coord, i) => {
-        return coord + 0.001 * TIMESTEP * movement_vec[i];
-      });
-  
-      setCameraPos(newCameraPos);
-    }
+    setCameraPhi(newCameraPhi);
+    setCameraDist(newCameraDist);
   }, [t])
 
   // ==============================
