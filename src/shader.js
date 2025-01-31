@@ -53,7 +53,7 @@ vec4 quatSq( vec4 q ) {
 // q: starting quaternion
 // dp: derivative estimate
 void iterateIntersect( inout vec4 q, inout vec4 dq, vec4 c) {
-  for(int i=0; i<25; i++) {
+  for(int i=0; i<30; i++) {
     dq = 2.0 * quaternionMult(q, dq) + dq;
     q = quatSq(q) + q + c;
 
@@ -133,7 +133,7 @@ void main() {
   vec3 color = vec3(0.7, 0.6, 0.65);
 
   // get pxl real space as if camera is centered at origin
-  vec3 pxl = uv.x * cameraX + cameraY + uv.y * cameraZ;
+  vec3 pxl = 0.5 * uv.x * cameraX + cameraY + 0.5 * uv.y * cameraZ;
   vec3 ray_norm = normalize( pxl );
 
   // get position of ray in real space
@@ -147,8 +147,8 @@ void main() {
   int RAYMARCHING_ITERATIONS = 150;
   float distance = 0.0;
 
-  // raymarch for 120 iterations
-  for (int i = 0; i < 120; i++) {
+  // raymarch for 150 iterations
+  for (int i = 0; i < 150; i++) {
     float radius = JuliaSDF(ray, juliaCenter, juliaSeed);
 
     float r_min = 0.0005 + 0.001*distance*distance;
