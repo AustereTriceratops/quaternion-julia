@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useRef, useState} from 'react'
+import React, {useEffect, useMemo, useRef, useState} from 'react'
 import glManager from './glManager'
 
 const TIMESTEP = 50
@@ -6,9 +6,10 @@ const TIMESTEP = 50
 const App = () => {
   const [juliaSeed, setJuliaSeed] = useState([ 0.33, 0.56, 0.43, -0.72,]);
   const [plane, setPlane] = useState(0.01);
+  const [controlPanelHover, setControlPaneHover] = useState(false);
 
   const [cameraPhi, setCameraPhi] = useState(0.1);
-  const [cameraTheta, setCameraTheta] = useState(0);
+  const [cameraTheta, setCameraTheta] = useState(0); // TODO
   const [cameraDist, setCameraDist] = useState(2);
 
   const cameraPos = useMemo(() => {
@@ -25,7 +26,7 @@ const App = () => {
       0,
       -Math.cos(cameraPhi)
     ];
-  }, [cameraPhi, cameraTheta]);
+  }, [cameraPhi]);
 
   const cameraAxisY = useMemo(() => {
     return [
@@ -33,7 +34,7 @@ const App = () => {
       0,
       -Math.sin(cameraPhi)
     ];
-  }, [cameraPhi, cameraTheta]);
+  }, [cameraPhi]);
 
   // TODO: allow Z axis rotation
   const cameraAxisZ = useMemo(() => {
@@ -136,18 +137,37 @@ const App = () => {
   }, [cameraPos, cameraAxisX, cameraAxisY, cameraAxisZ, juliaSeed, plane])
 
   return (
-    <canvas 
-      ref={canvasRef}
-      width={window.innerWidth}
-      height={window.innerHeight}
-      onKeyDown={(ev) => onKeyDown(ev)}
-      onKeyUp={(ev) => onKeyUp(ev)}
-      style={{
-          width: '100%',
-          height: '100%'
-      }}
-      tabIndex={0}
-    />
+    <React.Fragment>
+      <div 
+        style={{
+          position: 'absolute',
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '0.5rem',
+          userSelect: 'none',
+
+          backgroundColor: '#555',
+          color: 'white',
+          opacity: controlPanelHover ? '80%' : '50%',
+        }}
+        onMouseOver={() => setControlPaneHover(true)}
+        onMouseLeave={() => setControlPaneHover(false)}
+      >
+        test
+      </div>
+      <canvas
+        ref={canvasRef}
+        width={window.innerWidth}
+        height={window.innerHeight}
+        onKeyDown={(ev) => onKeyDown(ev)}
+        onKeyUp={(ev) => onKeyUp(ev)}
+        style={{
+            width: '100%',
+            height: '100%'
+        }}
+        tabIndex={1}
+      />
+    </React.Fragment>
   );
 }
 

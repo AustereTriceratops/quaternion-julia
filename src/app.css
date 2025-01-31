@@ -1,0 +1,11 @@
+.ControlPanel {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    user-select: none;
+
+    background-color: #555;
+    color: white;
+    opacity: 50%;
+}
