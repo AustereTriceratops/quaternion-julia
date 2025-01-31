@@ -1,14 +1,13 @@
-import { Slider } from '@mui/material';
 import React, {useEffect, useMemo, useRef, useState} from 'react'
 import glManager from './glManager'
-import InputSlider from './InputSlider';
+import Controls from './controls';
 
 const TIMESTEP = 50
 
 const App = () => {
   const [juliaSeed, setJuliaSeed] = useState([ 0.33, 0.56, 0.43, -0.72,]);
   const [plane, setPlane] = useState(0.01);
-  const [controlPanelHover, setControlPaneHover] = useState(false);
+  const [controlPanelHover, setControlPanelHover] = useState(false);
 
   const [cameraPhi, setCameraPhi] = useState(0.1);
   const [cameraTheta, setCameraTheta] = useState(0); // TODO
@@ -140,59 +139,14 @@ const App = () => {
 
   return (
     <React.Fragment>
-      <div 
-        style={{
-          position: 'absolute',
-          display: 'flex',
-          flexDirection: 'column',
-          padding: '0.5rem',
-          userSelect: 'none',
-          width: '20rem',
-
-          backgroundColor: '#555',
-          color: 'white',
-          opacity: controlPanelHover ? '80%' : '50%',
-        }}
-        onMouseOver={() => setControlPaneHover(true)}
-        onMouseLeave={() => setControlPaneHover(false)}
-      >
-        <InputSlider
-          value={juliaSeed[0]}
-          onChange={(ev) => {
-            const newJuliaSeed = [...juliaSeed];
-            newJuliaSeed[0] = ev.target.value;
-            setJuliaSeed(newJuliaSeed)
-          }}
-        />
-        <InputSlider
-          value={juliaSeed[1]}
-          onChange={(ev) => {
-            const newJuliaSeed = [...juliaSeed];
-            newJuliaSeed[1] = ev.target.value;
-            setJuliaSeed(newJuliaSeed)
-          }}
-        />
-        <InputSlider
-          value={juliaSeed[2]}
-          onChange={(ev) => {
-            const newJuliaSeed = [...juliaSeed];
-            newJuliaSeed[2] = ev.target.value;
-            setJuliaSeed(newJuliaSeed)
-          }}
-        />
-        <InputSlider
-          value={juliaSeed[3]}
-          onChange={(ev) => {
-            const newJuliaSeed = [...juliaSeed];
-            newJuliaSeed[3] = ev.target.value;
-            setJuliaSeed(newJuliaSeed)
-          }}
-        />
-        <InputSlider
-          value={plane}
-          onChange={(ev) => setPlane(ev.target.value)}
-        />
-      </div>
+      <Controls
+        controlPanelHover={controlPanelHover}
+        setControlPanelHover={setControlPanelHover}
+        plane={plane}
+        setPlane={setPlane}
+        juliaSeed={juliaSeed}
+        setJuliaSeed={setJuliaSeed}
+      />
       <canvas
         ref={canvasRef}
         width={window.innerWidth}
