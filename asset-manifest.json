@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/quaternion-julia/static/css/main.05910c0e.css",
-    "main.js": "/quaternion-julia/static/js/main.a128bd2e.js",
+    "main.js": "/quaternion-julia/static/js/main.a73053c7.js",
     "index.html": "/quaternion-julia/index.html",
     "main.05910c0e.css.map": "/quaternion-julia/static/css/main.05910c0e.css.map",
-    "main.a128bd2e.js.map": "/quaternion-julia/static/js/main.a128bd2e.js.map"
+    "main.a73053c7.js.map": "/quaternion-julia/static/js/main.a73053c7.js.map"
   },
   "entrypoints": [
     "static/css/main.05910c0e.css",
-    "static/js/main.a128bd2e.js"
+    "static/js/main.a73053c7.js"
   ]
 }
