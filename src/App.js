@@ -13,6 +13,10 @@ const App = () => {
   const [cameraTheta, setCameraTheta] = useState(0); // TODO
   const [cameraDist, setCameraDist] = useState(3);
 
+  // ==============================
+  // ====== CAMERA 3D LOGIC =======
+  // ==============================
+
   const cameraPos = useMemo(() => {
     return [
       cameraDist * Math.cos(cameraTheta) * Math.cos(cameraPhi),
@@ -80,6 +84,28 @@ const App = () => {
       setDDown(false);
     }
   }
+
+  // ==============================
+  // ======== MOUSE INPUT =========
+  // ==============================
+
+  const [isDragging, setIsDragging] = useState(false);
+
+  const onMouseDown = (ev) => {
+    setIsDragging(true);
+  }
+
+  const onMouseUp = (ev) => {
+    setIsDragging(false);
+  }
+
+  const onMouseMove = (ev) => {
+    if (isDragging) {
+      let newCameraPhi = cameraPhi;
+      newCameraPhi += 0.015 * ev.movementX;
+      setCameraPhi(newCameraPhi);
+    }
+  }
   
   // ==============================
   // ===== TIMER AND MOVEMENT =====
@@ -99,22 +125,29 @@ const App = () => {
   useEffect(() => {
     let newCameraPhi = cameraPhi;
     let newCameraDist = cameraDist;
+    let updated = false;
 
     if (wDown) {
       newCameraDist -= 0.1;
+      updated = true;
     }
     if (aDown) {
       newCameraPhi += 0.1;
+      updated = true;
     }
     if (sDown) {
       newCameraDist += 0.1;
+      updated = true;
     }
     if (dDown) {
       newCameraPhi -= 0.1;
+      updated = true;
     }
 
-    setCameraPhi(newCameraPhi);
-    setCameraDist(newCameraDist);
+    if (updated) {
+      setCameraPhi(newCameraPhi);
+      setCameraDist(newCameraDist);
+    }
   }, [t])
 
   // ==============================
@@ -153,6 +186,9 @@ const App = () => {
         height={window.innerHeight}
         onKeyDown={(ev) => onKeyDown(ev)}
         onKeyUp={(ev) => onKeyUp(ev)}
+        onMouseDown={(ev) => onMouseDown(ev)}
+        onMouseUp={(ev) => onMouseUp(ev)}
+        onMouseMove={(ev) => onMouseMove(ev)}
         style={{
             width: '100%',
             height: '100%'
