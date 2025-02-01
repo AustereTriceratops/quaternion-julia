@@ -127,7 +127,7 @@ float toInterval( vec2 a, vec2 b, float p ) {
 const shaderMain = `
 // gl_FragCoord in [0,1]
 void main() {
-  vec2 uv = toNeg1Pos1(gl_FragCoord.xy);
+  vec2 uv = toNeg1Pos1(gl_FragCoord.xy) * vec2(1.0/(aspect*aspect), 1.0);
 
   // white background
   vec3 color = vec3(0.7, 0.6, 0.65);

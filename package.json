@@ -1,6 +1,7 @@
 {
   "name": "quaternion-julia",
   "version": "0.1.0",
+  "homepage": "https://austeretriceratops.github.io/quaternion-julia",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.14.0",
