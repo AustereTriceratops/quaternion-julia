@@ -198,7 +198,8 @@ const App = () => {
         onMouseMove={(ev) => onMouseMove(ev)}
         style={{
             width: '100%',
-            height: '100%'
+            height: '100%',
+            cursor: 'grab'
         }}
         tabIndex={1}
       />

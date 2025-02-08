@@ -7,6 +7,7 @@ export const InputSlider = (props) => {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
         gap: '0.5rem',
       }}
     >
@@ -16,17 +17,9 @@ export const InputSlider = (props) => {
         min={-2}
         max={2}
         onChange={props.onChange}
-        sx={{width: '75%'}}
+        sx={{marginLeft: '3rem'}}
       />
-      <Input
-        type='numeric'
-        value={props.value}
-        step={0.01}
-        min={-2}
-        max={2}
-        onChange={props.onChange}
-        sx={{color: 'white', width: '20%'}}
-      />
+      {props.value}
     </div>
   )
 }

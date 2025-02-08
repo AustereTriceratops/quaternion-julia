@@ -44,7 +44,7 @@ export const Controls = (props) => {
                     value={juliaSeed[0]}
                     onChange={(ev) => {
                         const newJuliaSeed = [...juliaSeed];
-                        newJuliaSeed[0] = ev.target.value;
+                        newJuliaSeed[0] = parseFloat(ev.target.value);
                         setJuliaSeed(newJuliaSeed)
                     }}
                 />
@@ -72,6 +72,9 @@ export const Controls = (props) => {
                         setJuliaSeed(newJuliaSeed)
                     }}
                 />
+                <div>
+                    Plane
+                </div>
                 <InputSlider
                     value={props.plane}
                     onChange={(ev) => props.setPlane(ev.target.value)}
