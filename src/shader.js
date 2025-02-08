@@ -147,11 +147,11 @@ void main() {
   int RAYMARCHING_ITERATIONS = 150;
   float distance = 0.0;
 
-  // raymarch for 150 iterations
-  for (int i = 0; i < 150; i++) {
+  // raymarch for 180 iterations
+  for (int i = 0; i < 180; i++) {
     float radius = JuliaSDF(ray, juliaCenter, juliaSeed);
 
-    float r_min = 0.0005 + 0.001*distance*distance;
+    float r_min = 0.0001 + 0.0003*distance*distance;
 
     if (radius < r_min) {
       color = vec3(0.5, 0.46, 0.38);

@@ -5,9 +5,8 @@ import Controls from './controls';
 const TIMESTEP = 50
 
 const App = () => {
-  const [juliaSeed, setJuliaSeed] = useState([ 0.33, 0.56, 0.43, -0.72]);
+  const [juliaSeed, setJuliaSeed] = useState([ -0.49, -0.12, 0.67, -0.08]);
   const [plane, setPlane] = useState(0.01);
-  const [controlPanelHover, setControlPanelHover] = useState(false);
 
   const [cameraPhi, setCameraPhi] = useState(0.1);
   const [cameraTheta, setCameraTheta] = useState(0); // TODO
@@ -183,8 +182,6 @@ const App = () => {
   return (
     <React.Fragment>
       <Controls
-        controlPanelHover={controlPanelHover}
-        setControlPanelHover={setControlPanelHover}
         plane={plane}
         setPlane={setPlane}
         juliaSeed={juliaSeed}
