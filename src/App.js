@@ -5,7 +5,7 @@ import Controls from './controls';
 const TIMESTEP = 50
 
 const App = () => {
-  const [juliaSeed, setJuliaSeed] = useState([ 0.33, 0.56, 0.43, -0.72,]);
+  const [juliaSeed, setJuliaSeed] = useState([ 0.33, 0.56, 0.43, -0.72]);
   const [plane, setPlane] = useState(0.01);
   const [controlPanelHover, setControlPanelHover] = useState(false);
 
@@ -35,16 +35,20 @@ const App = () => {
 
   const cameraAxisY = useMemo(() => {
     return [
-      -Math.cos(cameraPhi),
-      0,
-      -Math.sin(cameraPhi)
+      -Math.cos(cameraTheta) * Math.cos(cameraPhi),
+      -Math.sin(cameraTheta),
+      -Math.cos(cameraTheta) * Math.sin(cameraPhi)
     ];
-  }, [cameraPhi]);
+  }, [cameraPhi, cameraTheta]);
 
   // TODO: allow Z axis rotation
   const cameraAxisZ = useMemo(() => {
-    return [0.0, 1.0, 0.0];
-  }, []);
+    return [
+      cameraAxisX[1]*cameraAxisY[2] - cameraAxisX[2]*cameraAxisY[1],
+      cameraAxisX[2]*cameraAxisY[0] - cameraAxisX[0]*cameraAxisY[2],
+      cameraAxisX[0]*cameraAxisY[1] - cameraAxisX[1]*cameraAxisY[0],
+  ];
+  }, [cameraAxisX, cameraAxisY]);
 
   // ==============================
   // ======= KEYBOARD INPUT =======
@@ -104,6 +108,12 @@ const App = () => {
       let newCameraPhi = cameraPhi;
       newCameraPhi += 0.015 * ev.movementX;
       setCameraPhi(newCameraPhi);
+      
+      let newCameraTheta = cameraTheta;
+      newCameraTheta += 0.015 * ev.movementY;
+      newCameraTheta = Math.min(newCameraTheta, 0.8);
+      newCameraTheta = Math.max(newCameraTheta, -0.8);
+      setCameraTheta(newCameraTheta);
     }
   }
   
