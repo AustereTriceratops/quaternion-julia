@@ -154,7 +154,7 @@ void main() {
     float r_min = 0.0001 + 0.0003*distance*distance;
 
     if (radius < r_min) {
-      color = vec3(0.5, 0.46, 0.38);
+      color = vec3(0.5, 0.6, 0.7);
 
       vec3 normal = estimateJuliaNormal(ray, juliaCenter, juliaSeed);
 
