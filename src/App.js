@@ -7,6 +7,7 @@ const TIMESTEP = 50
 const App = () => {
   const [juliaSeed, setJuliaSeed] = useState([ -0.49, -0.12, 0.67, -0.08]);
   const [plane, setPlane] = useState(0.01);
+  const [githubIconHighlight, setGithubIconHighlight] = useState(false);
 
   const [cameraPhi, setCameraPhi] = useState(0.1);
   const [cameraTheta, setCameraTheta] = useState(0); // TODO
@@ -110,8 +111,8 @@ const App = () => {
       
       let newCameraTheta = cameraTheta;
       newCameraTheta += 0.015 * ev.movementY;
-      newCameraTheta = Math.min(newCameraTheta, 0.8);
-      newCameraTheta = Math.max(newCameraTheta, -0.8);
+      newCameraTheta = Math.min(newCameraTheta, 1.2);
+      newCameraTheta = Math.max(newCameraTheta, -1.2);
       setCameraTheta(newCameraTheta);
     }
   }
@@ -181,6 +182,24 @@ const App = () => {
 
   return (
     <React.Fragment>
+      <a href="https://github.com/AustereTriceratops/quaternion-julia">
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            backgroundColor: 'white',
+            margin: '1rem',
+            padding: '0.2rem',
+            borderRadius: '0.5rem', 
+            opacity: githubIconHighlight ? '100%' : '80%',
+            boxShadow: '0px 0px 10px 2px rgba(0.1, 0.05, 0.05, 0.8)'
+          }}
+          onMouseOver={() => setGithubIconHighlight(true)}
+          onMouseLeave={() => setGithubIconHighlight(true)}
+        >
+          <img src={require('./githubicon.svg').default} width={32} height={32}/>
+        </div>
+      </a>
       <Controls
         plane={plane}
         setPlane={setPlane}
