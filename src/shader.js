@@ -176,7 +176,7 @@ void main() {
       break;
     }
 
-    if (distance > 5.0) {
+    if (distance > 10.0) {
       break;
     }
 

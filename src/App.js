@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useRef, useState} from 'react'
 import glManager from './glManager'
 import Controls from './controls';
 
-const TIMESTEP = 50
+const TIMESTEP = 30
 
 const App = () => {
   const [juliaSeed, setJuliaSeed] = useState([ -0.49, -0.12, 0.67, -0.08]);
@@ -58,6 +58,8 @@ const App = () => {
   const [aDown, setADown] = useState(false);
   const [sDown, setSDown] = useState(false);
   const [dDown, setDDown] = useState(false);
+  const [eDown, setEDown] = useState(false);
+  const [cDown, setCDown] = useState(false);
 
   const onKeyDown = (ev) => {
     if (!wDown && ev.key === 'w') {
@@ -71,6 +73,12 @@ const App = () => {
     }
     if (!dDown && ev.key === 'd') {
       setDDown(true);
+    }
+    if (!eDown && ev.key === 'e') {
+      setEDown(true);
+    }
+    if (!cDown && ev.key === 'c') {
+      setCDown(true);
     }
   }
 
@@ -86,6 +94,12 @@ const App = () => {
     }
     if (ev.key === 'd') {
       setDDown(false);
+    }
+    if (ev.key === 'e') {
+      setEDown(false);
+    }
+    if (ev.key === 'c') {
+      setCDown(false);
     }
   }
 
@@ -116,6 +130,13 @@ const App = () => {
       setCameraTheta(newCameraTheta);
     }
   }
+
+  const onWheel = (ev) => {
+    console.log(ev)
+    let newCameraDist = cameraDist;
+    newCameraDist += 0.02*ev.deltaY;
+    setCameraDist(newCameraDist);
+  }
   
   // ==============================
   // ===== TIMER AND MOVEMENT =====
@@ -134,6 +155,7 @@ const App = () => {
   // should only be updated as t updates
   useEffect(() => {
     let newCameraPhi = cameraPhi;
+    let newCameraTheta = cameraTheta;
     let newCameraDist = cameraDist;
     let updated = false;
 
@@ -142,7 +164,7 @@ const App = () => {
       updated = true;
     }
     if (aDown) {
-      newCameraPhi += 0.1;
+      newCameraPhi += 0.08;
       updated = true;
     }
     if (sDown) {
@@ -150,12 +172,21 @@ const App = () => {
       updated = true;
     }
     if (dDown) {
-      newCameraPhi -= 0.1;
+      newCameraPhi -= 0.08;
+      updated = true;
+    }
+    if (eDown) {
+      newCameraTheta += 0.08;
+      updated = true;
+    }
+    if (cDown) {
+      newCameraTheta -= 0.08;
       updated = true;
     }
 
     if (updated) {
       setCameraPhi(newCameraPhi);
+      setCameraTheta(newCameraTheta);
       setCameraDist(newCameraDist);
     }
   }, [t])
@@ -215,6 +246,7 @@ const App = () => {
         onMouseDown={(ev) => onMouseDown(ev)}
         onMouseUp={(ev) => onMouseUp(ev)}
         onMouseMove={(ev) => onMouseMove(ev)}
+        onWheel={(ev) => onWheel(ev)}
         style={{
             width: '100%',
             height: '100%',
