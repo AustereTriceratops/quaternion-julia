@@ -132,7 +132,6 @@ const App = () => {
   }
 
   const onWheel = (ev) => {
-    console.log(ev)
     let newCameraDist = cameraDist;
     newCameraDist += 0.02*ev.deltaY;
     setCameraDist(newCameraDist);

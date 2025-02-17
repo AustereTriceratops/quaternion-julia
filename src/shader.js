@@ -53,11 +53,11 @@ vec4 quatSq( vec4 q ) {
 // q: starting quaternion
 // dp: derivative estimate
 void iterateIntersect( inout vec4 q, inout vec4 dq, vec4 c) {
-  for(int i=0; i<30; i++) {
+  for(int i=0; i<60; i++) {
     dq = 2.0 * quaternionMult(q, dq) + dq;
     q = quatSq(q) + q + c;
 
-    if( dot( q, q ) > 100.0 ) {
+    if( dot( q, q ) > 20.0 ) {
       break;
     }
   }
@@ -82,7 +82,7 @@ float JuliaSDF( vec3 ray, vec3 center, vec4 c ) {
   float y = dot( dq, dq );
   dist = 0.2 * sqrt( x / y ) * log( x );
 
-  return dist;
+  return min(dist, 2.0);
 }
 
 
@@ -129,7 +129,7 @@ const shaderMain = `
 void main() {
   vec2 uv = toNeg1Pos1(gl_FragCoord.xy) * vec2(1.0/(aspect*aspect), 1.0);
 
-  // white background
+  // background color
   vec3 color = vec3(0.7, 0.6, 0.65);
 
   // get pxl real space as if camera is centered at origin
@@ -149,14 +149,18 @@ void main() {
 
   // raymarch for 180 iterations
   for (int i = 0; i < 180; i++) {
-    float radius = JuliaSDF(ray, juliaCenter, juliaSeed);
+    float radius = max(ray.y, JuliaSDF(ray, juliaCenter, juliaSeed));
 
     float r_min = 0.0001 + 0.0003*distance*distance;
 
     if (radius < r_min) {
       color = vec3(0.5, 0.6, 0.7);
 
-      vec3 normal = estimateJuliaNormal(ray, juliaCenter, juliaSeed);
+      vec3 normal = vec3(1.0, 0.0, 0.0);
+      
+      if (ray.y < 0.0) {
+        normal = estimateJuliaNormal(ray, juliaCenter, juliaSeed);
+      }
 
       // facs will be in interval [-1, 1]
       float fac_d = dot(normal, lightNorm);
