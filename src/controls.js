@@ -82,11 +82,11 @@ export const Controls = (props) => {
             </div>
             <div
                 style={{
+                    display: 'flex',
+                    alignItems: 'center',
                     backgroundColor: '#555',
                     opacity: '70%',
                     cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center'
                 }}
                 onClick={() => toggleControlsHidden()}
             >

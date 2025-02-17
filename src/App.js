@@ -21,7 +21,7 @@ const App = () => {
     return [
       cameraDist * Math.cos(cameraTheta) * Math.cos(cameraPhi),
       cameraDist * Math.sin(cameraTheta),
-      cameraDist * Math.cos(cameraTheta) * Math.sin(cameraPhi)
+      -0.5 + cameraDist * Math.cos(cameraTheta) * Math.sin(cameraPhi)
     ];
   }, [cameraPhi, cameraTheta, cameraDist]);
 
