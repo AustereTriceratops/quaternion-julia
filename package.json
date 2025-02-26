@@ -8,19 +8,16 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.3",
     "@mui/material": "^6.4.2",
-    "cra-template": "1.2.0",
+    "@vitejs/plugin-react": "^4.3.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-scripts": "5.0.1",
-    "three": "^0.172.0"
+    "three": "^0.172.0",
+    "vite": "^6.2.0"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "vite",
+    "build": "tsc && vite build",
+    "serve": "vite preview"
   },
   "eslintConfig": {
     "extends": [
@@ -41,9 +38,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "eslint-plugin-react-compiler": "^19.0.0-beta-e1e972c-20250221",
-    "gh-pages": "^6.3.0",
-    "react-compiler-webpack": "^0.1.2"
+    "gh-pages": "^6.3.0"
   }
 }

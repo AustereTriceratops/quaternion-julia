@@ -212,7 +212,7 @@ const App = () => {
 
   return (
     <React.Fragment>
-      <a href="https://github.com/AustereTriceratops/quaternion-julia">
+      {/* <a href="https://github.com/AustereTriceratops/quaternion-julia">
         <div
           style={{
             position: 'absolute',
@@ -229,7 +229,7 @@ const App = () => {
         >
           <img src={require('./githubicon.svg').default} width={32} height={32}/>
         </div>
-      </a>
+      </a> */}
       <Controls
         plane={plane}
         setPlane={setPlane}
